@@ -16,7 +16,7 @@ const passwordMustHaveMinLengthMessage = {
   message: 'O "password" deve ter pelo menos 6 caracteres',
 };
 
-const loginMiddleWare = (req, res, next) => {
+const loginMiddleWare = (req, res, _next) => {
   const { email, password } = req.body;
   const token = crypto.randomBytes(8).toString('hex');
   const validEmailFormat = /\S+@\S+\.\S+/;
@@ -27,11 +27,13 @@ const loginMiddleWare = (req, res, next) => {
   if (!password) return res.status(400).json(passwordIsRequiredMessage);
   if (password.length < 6) return res.status(400).json(passwordMustHaveMinLengthMessage); 
 
-  req.email = email;
-  req.password = password;
-  req.token = token;
+  // req.email = email;
+  // req.password = password;
+  // req.token = token;
 
-  next();
+  // next();
+
+  return res.status(200).send({ token });
 };
 
 module.exports = loginMiddleWare;

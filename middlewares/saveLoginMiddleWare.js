@@ -1,22 +1,24 @@
-const fs = require('fs').promises;
+// implementação abaixo não passa nos testes da trybe
 
-const USERS_JSON = './users.json';
+// const fs = require('fs').promises;
 
-const saveLoginMiddleWare = async (req, res) => {
-  const { email, password, token } = req;
+// const USERS_JSON = './users.json';
 
-  const users = await fs.readFile(USERS_JSON, 'utf-8');
-  const usersJson = JSON.parse(users);
+// const saveLoginMiddleWare = async (req, res) => {
+//   const { email, password, token } = req;
 
-  const user = usersJson.find((u) => u.email === email);
+//   const users = await fs.readFile(USERS_JSON, 'utf-8');
+//   const usersJson = JSON.parse(users);
 
-  if (user) return res.status(400).json({ message: 'Pessoa já cadastrada' });
+//   const user = usersJson.find((u) => u.email === email);
 
-  usersJson.push({ email, password, token });
+//   if (user) return res.status(400).json({ message: 'Pessoa já cadastrada' });
 
-  await fs.writeFile(USERS_JSON, JSON.stringify(usersJson));
+//   usersJson.push({ email, password, token });
 
-  return res.status(200).send({ token });
-};
+//   await fs.writeFile(USERS_JSON, JSON.stringify(usersJson));
 
-module.exports = saveLoginMiddleWare;
+//   return res.status(200).send({ token });
+// };
+
+// module.exports = saveLoginMiddleWare;
