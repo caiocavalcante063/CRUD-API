@@ -1,9 +1,9 @@
 const express = require('express');
 const fs = require('fs').promises;
-const tokenValidationMiddlleware = require('../tokenValidationMiddleware');
-const nameValidationMiddlleware = require('../nameValidationMiddleware');
-const ageValidationMiddlleware = require('../ageValidationMiddleware');
-const talkValidationMiddlleware = require('../talkValidationMiddleware');
+const tokenValidation = require('../middleware/tokenValidation');
+const nameValidation = require('../middleware/nameValidation');
+const ageValidation = require('../middleware/ageValidation');
+const talkValidation = require('../middleware/talkValidation');
 
 const router = express.Router();
 
@@ -14,7 +14,7 @@ router.get('/', async (_req, res) => {
   res.status(200).json(JSON.parse(talkers));
 });
 
-router.get('/search', tokenValidationMiddlleware, async (req, res) => {
+router.get('/search', tokenValidation, async (req, res) => {
   const { name } = req.query;
   const talkers = await fs.readFile(TALKER_JSON, 'utf-8');
   const talkersJson = JSON.parse(talkers);
@@ -37,7 +37,7 @@ router.get('/:id', async (req, res) => {
   return res.status(200).json(talker);
 });
 
-router.use(tokenValidationMiddlleware);
+router.use(tokenValidation);
 
 router.delete('/:id', async (req, res) => {
   const { id } = req.params;
@@ -54,9 +54,9 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.use(
-    nameValidationMiddlleware,
-    ageValidationMiddlleware,
-    talkValidationMiddlleware,
+    nameValidation,
+    ageValidation,
+    talkValidation,
   );
 
 router.post('/', async (req, res) => {

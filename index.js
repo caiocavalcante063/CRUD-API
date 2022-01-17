@@ -16,11 +16,11 @@ app.listen(PORT, () => {
   console.log('Online');
 });
 
-const loginMiddleware = require('./middlewares/loginMiddleware');
+const login = require('./middleware/login');
 // const saveLoginMiddleWare = require('./middlewares/saveLoginMiddleware');
 
-app.post('/login', loginMiddleware/* , saveLoginMiddleWare */);
+app.post('/login', login/* , saveLoginMiddleWare */);
 
-const talkerRouter = require('./middlewares/router/talkerRouter');
+const talkerRouter = require('./routes/talker');
 
 app.use('/talker', talkerRouter);
