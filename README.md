@@ -15,11 +15,10 @@ escrever em um arquivo, isso utilizando o módulo `fs`.
 
 ### Instalando dependências:
 ```bash
-cd src/
-npm install
+  npm install
 ``` 
 ### Executando a aplicação
 
   ```bash
-    cd src/ && npm start
+  npm start
   ```
