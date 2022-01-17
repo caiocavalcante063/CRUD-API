@@ -16,8 +16,8 @@ const numberIsBetween = (limInf, limSup, n) => (parseInt(n, 10) >= limInf
 const requiredFieldsCheck = (talk) => {
  const { watchedAt, rate } = talk;
 
- if (!watchedAt || !rate) return false;
- if (watchedAt.length === 0 || rate.length === 0) return false;
+ if (!watchedAt || (!rate && rate !== 0)) return false;
+ if (watchedAt.length === 0) return false;
  
  return true;
 };
@@ -31,7 +31,7 @@ const talkValidationMiddlleware = (req, res, next) => {
   const testedDate = validDateFormat.test(String(talk.watchedAt).toLowerCase());
 
   if (!testedDate) return res.status(400).json(watchedAtInvalidMessage); 
-  if (!numberIsBetween(0, 5, talk.rate)) { 
+  if (!numberIsBetween(1, 5, talk.rate)) { 
     return res.status(400).json(rateInvalidMessage); 
   }
 
