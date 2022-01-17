@@ -27,8 +27,23 @@ router.get('/:id', async (req, res) => {
   return res.status(200).json(talker);
 });
 
+router.use(tokenValidationMiddlleware);
+
+router.delete('/:id', async (req, res) => {
+  const { id } = req.params;
+  const talkers = await fs.readFile(TALKER_JSON, 'utf-8');
+  const talkersJson = JSON.parse(talkers);
+  const talkerIndex = talkersJson.indexOf(talkersJson.find((r) => r.id === Number(id)));
+
+  if (talkerIndex === -1) return res.status(404).json({ message: 'Talker not found!' });
+  talkersJson.splice(talkerIndex, 1);
+
+  await fs.writeFile(TALKER_JSON, JSON.stringify(talkersJson));
+
+  return res.status(204).end();
+});
+
 router.use(
-    tokenValidationMiddlleware,
     nameValidationMiddlleware,
     ageValidationMiddlleware,
     talkValidationMiddlleware,
