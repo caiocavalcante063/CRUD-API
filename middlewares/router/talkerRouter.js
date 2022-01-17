@@ -14,6 +14,16 @@ router.get('/', async (_req, res) => {
   res.status(200).json(JSON.parse(talkers));
 });
 
+router.get('/search', tokenValidationMiddlleware, async (req, res) => {
+  const { name } = req.query;
+  const talkers = await fs.readFile(TALKER_JSON, 'utf-8');
+  const talkersJson = JSON.parse(talkers);
+
+  if (!name) return res.status(200).json(talkersJson);
+
+ return res.status(200).json(talkersJson.filter((t) => t.name.includes(name)));
+});
+
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
   
